@@ -8,13 +8,13 @@ Vagrant.configure("2") do |config|
         echo #{File.readlines("/home/adrien/.ssh/id_rsa.pub").first.strip} >> /home/vagrant/.ssh/authorized_keys
     SHELL
 
-    ## installation de docker
-    config.vm.provision "shell", path: "install-provision.sh"
+    ## installations
+    # config.vm.provision "shell", path: "install-provision.sh"
     
     config.vm.define "kubmaster" do |machine|
-        machine.vm.box = "bento/ubuntu-16.04"
+        machine.vm.box = "ubuntu/jammy64"
         machine.vm.hostname = "kubmaster"
-        machine.vm.box_url = "bento/ubuntu-16.04"
+        machine.vm.box_url = "ubuntu/jammy64"
         machine.vm.network :private_network, ip: "192.168.56.101"
         machine.vm.provider :virtualbox do |v|
             v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
@@ -26,9 +26,9 @@ Vagrant.configure("2") do |config|
     end
      
     config.vm.define "kubnode" do |machine|
-        machine.vm.box = "bento/ubuntu-16.04"
+        machine.vm.box = "ubuntu/jammy64"
         machine.vm.hostname = "kubnode"
-        machine.vm.box_url = "bento/ubuntu-16.04"
+        machine.vm.box_url = "ubuntu/jammy64"
         machine.vm.network :private_network, ip: "192.168.56.102"
         machine.vm.provider :virtualbox do |v|
             v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
